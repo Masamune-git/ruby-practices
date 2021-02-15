@@ -1,22 +1,21 @@
 #!/usr/bin/env ruby
 require 'optparse'
 require "date"
-#オプション用変数
 options = ARGV.getopts('m:y:')
-get_m = options["m"].to_i
-get_y = options["y"].to_i
-#デフォルト変数
-default_m = Date.today.month
-default_y = Date.today.year
+get_month = options["m"].to_i
+get_year = options["y"].to_i
+default_month = Date.today.month
+default_year = Date.today.year
 
-def main(m,y,i,last_day)
-  printf("%8s", "#{m}月")
-  printf("%5s", "#{y}")
+# 変数iが正の場合その数字をカレンダーの日付として出力し、負または最終日よりも大きい数の場合はスペースを出力する
+def main(month,year,i,last_day)
+  printf("%8s", "#{month}月")
+  printf("%5s", "#{year}")
   puts
   puts "日 月 火 水 木 金 土"
   6.times do
     7.times do
-      if m == Date.today.month && y == Date.today.year && i == Date.today.day
+      if month == Date.today.month && year == Date.today.year && i == Date.today.day
         printf("%3s", "\e[7;7m#{i}\e[0m ")
       elsif i <= 0 || i > last_day 
         printf("%3s",  "")
@@ -29,32 +28,15 @@ def main(m,y,i,last_day)
   end
 end
 
-def judge_week(x)
-  if x == "Sun"
-    1
-  elsif x == "Mon"
-    0
-  elsif x == "Tue"
-    -1
-  elsif x == "Wed"
-    -2
-  elsif x == "Thu"
-    -3
-  elsif x == "Fri"
-    -4
-  elsif x == "Sat"
-    -5
-  end
-end
-
-if 0 < get_m && get_m < 13 && 1970 <= get_y && get_y <=2100
-  last_day = Date.new(get_y,get_m,-1).day
-  first_day = Date.new(get_y,get_m,1).strftime('%a')
-  i = judge_week(first_day)
-  main(get_m,get_y,i,last_day)  
+if 1 <= get_month && get_month <= 12 && 1970 <= get_year && get_year <=2100
+  last_day = Date.new(get_year,get_month,-1).day
+  first_wday = Date.new(get_year,get_month,1).wday
+  #変数iはカレンダーの初日(1日)をi=1とした場合に最初の週の日曜日に入る相対的な数である
+  i = 1 - first_wday
+  main(get_month,get_year,i,last_day)  
 else
-  last_day = Date.new(default_y,default_m,-1).day
-  first_day = Date.new(default_y,default_m,1).strftime('%a')
-  i = judge_week(first_day)
-  main(default_m,default_y,i,last_day)
+  last_day = Date.new(default_year,default_month,-1).day
+  first_wday = Date.new(default_year,default_month,1).wday
+  i = 1 - first_wday
+  main(default_month,default_year,i,last_day)
 end
