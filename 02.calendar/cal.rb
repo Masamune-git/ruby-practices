@@ -3,14 +3,14 @@ require 'optparse'
 require "date"
 options = ARGV.getopts('m:y:')
 
-# 変数calendar_date_numが正の場合その数字をカレンダーの日付として出力し、負または最終日よりも大きい数の場合はスペースを出力する
 def main(month,year)
   last_day = Date.new(year,month,-1).day
   first_wday = Date.new(year,month,1).wday
+  # 変数calendar_date_numが正の場合その数字をカレンダーの日付として出力し、負または最終日よりも大きい数の場合はスペースを出力する
   calendar_date_num = 1 - first_wday
   printf("%8s", "#{month}月")
   printf("%5s", "#{year}")
-  puts
+  print "\n"
   puts "日 月 火 水 木 金 土"
   6.times do
     7.times do
