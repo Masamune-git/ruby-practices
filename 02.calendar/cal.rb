@@ -3,7 +3,7 @@ require 'optparse'
 require "date"
 options = ARGV.getopts('m:y:')
 
-# 変数iが正の場合その数字をカレンダーの日付として出力し、負または最終日よりも大きい数の場合はスペースを出力する
+# 変数calendar_date_numが正の場合その数字をカレンダーの日付として出力し、負または最終日よりも大きい数の場合はスペースを出力する
 def main(month,year)
   last_day = Date.new(year,month,-1).day
   first_wday = Date.new(year,month,1).wday
@@ -33,7 +33,6 @@ default_month = Date.today.month
 default_year = Date.today.year
 
 if (1 .. 12).include?(month) && (1970 .. 2100).include?(year)
-  #変数iはカレンダーの初日(1日)をi=1とした場合に最初の週の日曜日に入る相対的な数である
   main(month,year)  
 else
   main(default_month,default_year)
