@@ -9,6 +9,9 @@ default_year = Date.today.year
 
 # 変数iが正の場合その数字をカレンダーの日付として出力し、負または最終日よりも大きい数の場合はスペースを出力する
 def main(month,year,i,last_day)
+  last_day = Date.new(get_year,get_month,-1).day
+  first_wday = Date.new(get_year,get_month,1).wday
+  i = 1 - first_wday
   printf("%8s", "#{month}月")
   printf("%5s", "#{year}")
   puts
@@ -29,14 +32,8 @@ def main(month,year,i,last_day)
 end
 
 if 1 <= get_month && get_month <= 12 && 1970 <= get_year && get_year <=2100
-  last_day = Date.new(get_year,get_month,-1).day
-  first_wday = Date.new(get_year,get_month,1).wday
   #変数iはカレンダーの初日(1日)をi=1とした場合に最初の週の日曜日に入る相対的な数である
-  i = 1 - first_wday
   main(get_month,get_year,i,last_day)  
 else
-  last_day = Date.new(default_year,default_month,-1).day
-  first_wday = Date.new(default_year,default_month,1).wday
-  i = 1 - first_wday
   main(default_month,default_year,i,last_day)
 end
