@@ -7,7 +7,6 @@ scores = ARGV[0].split(',')
 # 数字に変換
 shots = []
 NINTH_FRAME_ENDED = 18
-
 scores.each do |score|
   if score == 'X' # strikeの処理
     shots << 10
