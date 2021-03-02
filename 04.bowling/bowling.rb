@@ -10,13 +10,13 @@ NINTH_FRAME_ENDED = 18
 scores.each do |score|
   if score == 'X' # strikeの処理
     shots << 10
-    shots << 0 if shots.size < NINTH_FRAME_ENDED # 1~9F目でstrikeの場合２投目を0にする
+    shots << 0 if shots.size < NINTH_FRAME_ENDED # 1~9F目でstrikeの場合2投目を0にする
   else
     shots << score.to_i
   end
 end
 
-# ２投ごとに1Fとして分割
+# 2投ごとに1Fとして分割
 frames = shots.each_slice(2).to_a
 
 # 点数計算
