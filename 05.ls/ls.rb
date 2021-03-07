@@ -6,14 +6,6 @@ require 'fileutils'
 require 'optparse'
 require 'date'
 
-opt = OptionParser.new
-file_entries = Dir.glob('*').sort
-option = []
-opt.on('-a') { option << 'a' }
-opt.on('-r') { option << 'r' }
-opt.on('-l') { option << 'l' }
-opt.parse(ARGV)
-
 def list_segments_output(line_value, file_entries)
   max_filename_length = file_entries.max_by(&:length).size + 2
   line_value.times do |x|
@@ -62,6 +54,14 @@ def output(longformats, max_link_length, max_user_length, max_group_length, max_
     puts format (longformats[6][i]).to_s
   end
 end
+
+opt = OptionParser.new
+file_entries = Dir.glob('*').sort
+option = []
+opt.on('-a') { option << 'a' }
+opt.on('-r') { option << 'r' }
+opt.on('-l') { option << 'l' }
+opt.parse(ARGV)
 
 file_entries = Dir.glob('*', File::FNM_DOTMATCH).sort if option.include?('a')
 file_entries = file_entries.reverse if option.include?('r')
