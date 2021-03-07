@@ -9,9 +9,9 @@ require 'date'
 def list_segments_output(file_entries)
   max_filename_length = file_entries.max_by(&:length).size + 2
   file_entries << '' while file_entries.size % 3 != 0
-  file_entries_trans = file_entries.each_slice(file_entries.size / 3).to_a.transpose
-  file_entries_trans.size.times do |x|
-    file_entries_trans[x].each  do |file|
+  file_entries_transpse = file_entries.each_slice(file_entries.size / 3).to_a.transpose
+  file_entries_transpse.size.times do |x|
+    file_entries_transpse[x].each  do |file|
       printf '% -*s', max_filename_length, file.to_s
     end
     print "\n"
