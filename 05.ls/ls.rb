@@ -25,12 +25,12 @@ end
 
 def list_segments_output_longformat(file_entries)
   blocks, permissions, links, users, groups, file_sizes, times, paths = Array.new(8).map { [] }
-  hash1 = { '0' => '---', '1' => '--x', '2' => '-w-', '3' => '-wx', '4' => 'r--', '5' => 'r-x', '6' => 'rw-', '7' => 'rwx' }
-  hash2 = { '00' => '-', '40' => 'd', '20' => 'l' }
+  permission_trans1 = { '0' => '---', '1' => '--x', '2' => '-w-', '3' => '-wx', '4' => 'r--', '5' => 'r-x', '6' => 'rw-', '7' => 'rwx' }
+  permission_trans2 = { '00' => '-', '40' => 'd', '20' => 'l' }
   file_entries.each do |x|
     fs = File.lstat("./#{x}")
     blocks << fs.blocks
-    permissions << hash2[fs.mode.to_s(8)[-5, 2]] + hash1[fs.mode.to_s(8)[-3, 1]] + hash1[fs.mode.to_s(8)[-2, 1]] + hash1[fs.mode.to_s(8)[-1, 1]]
+    permissions << permission_trans2[fs.mode.to_s(8)[-5, 2]] + permission_trans1[fs.mode.to_s(8)[-3, 1]] + permission_trans1[fs.mode.to_s(8)[-2, 1]] + permission_trans1[fs.mode.to_s(8)[-1, 1]]
     links << fs.nlink.to_s
     users << Etc.getpwuid(fs.uid).name.to_s
     groups << Etc.getgrgid(fs.gid).name.to_s
