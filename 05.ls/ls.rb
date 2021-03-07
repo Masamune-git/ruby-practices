@@ -25,12 +25,12 @@ end
 
 def list_segments_output_longformat(file_entries)
   blocks, permissions, links, users, groups, file_sizes, times, paths = Array.new(8).map { [] }
-  permission_trans1 = { '0' => '---', '1' => '--x', '2' => '-w-', '3' => '-wx', '4' => 'r--', '5' => 'r-x', '6' => 'rw-', '7' => 'rwx' }
-  permission_trans2 = { '00' => '-', '40' => 'd', '20' => 'l' }
+  change1 = { '0' => '---', '1' => '--x', '2' => '-w-', '3' => '-wx', '4' => 'r--', '5' => 'r-x', '6' => 'rw-', '7' => 'rwx' }
+  change2 = { '00' => '-', '40' => 'd', '20' => 'l' }
   file_entries.each do |x|
     fs = File.lstat("./#{x}")
     blocks << fs.blocks
-    permissions << permission_trans2[fs.mode.to_s(8)[-5, 2]] + permission_trans1[fs.mode.to_s(8)[-3, 1]] + permission_trans1[fs.mode.to_s(8)[-2, 1]] + permission_trans1[fs.mode.to_s(8)[-1, 1]]
+    permissions << change2[fs.mode.to_s(8)[-5, 2]] + change1[fs.mode.to_s(8)[-3, 1]] + change1[fs.mode.to_s(8)[-2, 1]] + change1[fs.mode.to_s(8)[-1, 1]]
     links << fs.nlink.to_s
     users << Etc.getpwuid(fs.uid).name.to_s
     groups << Etc.getgrgid(fs.gid).name.to_s
@@ -39,19 +39,20 @@ def list_segments_output_longformat(file_entries)
     paths << x
   end
   puts "total #{blocks.map.sum}"
-  longformats = [permissions, links, users, groups, file_sizes, times, paths]
-  output(longformats, links.max_by(&:length).size + 1, users.max_by(&:length).size + 1, groups.max_by(&:length).size + 2, file_sizes.max_by(&:length).size + 2)
+  longformats = { 'permissions' => permissions, 'links' => links, 'users' => users, 'groups' => groups, 'file_sizes' => file_sizes, 'times' => times,
+                  'paths' => paths }
+  output(longformats)
 end
 
-def output(longformats, max_link_length, max_user_length, max_group_length, max_file_size_length)
-  longformats[0].size.times do |i|
-    printf '% -*s', 11, (longformats[0][i]).to_s
-    printf '% *s', max_link_length, (longformats[1][i]).to_s
-    printf '% -*s', max_user_length, " #{longformats[2][i]}"
-    printf '% -*s', max_group_length, "  #{longformats[3][i]}"
-    printf '% *s', max_file_size_length, "  #{longformats[4][i]}"
-    printf '%*s', 13, "#{longformats[5][i]} "
-    puts format (longformats[6][i]).to_s
+def output(longformats)
+  longformats['permissions'].size.times do |i|
+    printf '% -*s', 11, (longformats['permissions'][i]).to_s
+    printf '% *s', longformats['links'].max_by(&:length).size + 1, (longformats['links'][i]).to_s
+    printf '% -*s', longformats['users'].max_by(&:length).size + 1, " #{longformats['users'][i]}"
+    printf '% -*s', longformats['groups'].max_by(&:length).size + 2, "  #{longformats['groups'][i]}"
+    printf '% *s', longformats['file_sizes'].max_by(&:length).size + 2, "  #{longformats['file_sizes'][i]}"
+    printf '%*s', 13, "#{longformats['times'][i]} "
+    puts format (longformats['paths'][i]).to_s
   end
 end
 
