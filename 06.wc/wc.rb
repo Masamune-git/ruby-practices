@@ -36,7 +36,7 @@ opt.on('-l') do
   files.shift
 end
 opt.parse(ARGV)
-output_width = 8 #生成文字列の長さ
+output_width = 8 # 生成文字列の長さ
 
 if files.empty? # 標準入力から受け取る場合の処理
   std_input = readlines.join
@@ -64,13 +64,10 @@ end
 
 # 複数ファイルを読み取った場合の処理
 if files.size >= 2
-  if option.include?('l') #-lオプションの処理
-    printf '% *s', output_width, total_file_line_count(files)
-    puts format '% s', ' total'
-  else
-    printf '% *s', output_width, total_file_line_count(files)
+  printf '% *s', output_width, total_file_line_count(files)
+  unless option.include?('l') #-lオプションがない場合
     printf '% *s', output_width, total_file_word_count(files)
     printf '% *s', output_width, total_file_bite_size(files)
-    puts format '% s', ' total'
   end
+  puts format '% s', ' total'
 end
