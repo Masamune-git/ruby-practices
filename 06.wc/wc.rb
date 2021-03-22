@@ -39,35 +39,35 @@ opt.parse(ARGV)
 
 if files.empty? # 標準入力から受け取る場合の処理
   std_input = readlines.join
-  printf '% *s', 8, std_input.count("\n").to_s
+  printf '% *s', 8, std_input.count("\n")
   unless option.include?('l')
-    printf '% *s', 8, std_input.scan(/\s+/).count.to_s
-    printf '% *s', 8, std_input.size.to_s
+    printf '% *s', 8, std_input.scan(/\s+/).count
+    printf '% *s', 8, std_input.size
   end
   print "\n"
 end
 
 if option.include?('l') #-lオプションの処理
   files.each do |file|
-    printf '% *s', 8, file_line_count(file).to_s
+    printf '% *s', 8, file_line_count(file)
     puts format '% s', " #{file}"
   end
 else
   files.each do |file|
-    printf '% *s', 8, file_line_count(file).to_s
-    printf '% *s', 8, file_word_count(file).to_s
-    printf '% *s', 8, file_bite_size(file).to_s
+    printf '% *s', 8, file_line_count(file)
+    printf '% *s', 8, file_word_count(file)
+    printf '% *s', 8, file_bite_size(file)
     puts format '% s', " #{file}"
   end
 end
 
 # 複数ファイルを読み取った場合の処理
 if files.size >= 2 && option.include?('l') #-lオプションの処理
-  printf '% *s', 8, total_file_line_count(files).to_s
+  printf '% *s', 8, total_file_line_count(files)
   puts format '% s', ' total'
 elsif files.size >= 2 && option.include?('l') == false
-  printf '% *s', 8, total_file_line_count(files).to_s
-  printf '% *s', 8, total_file_word_count(files).to_s
-  printf '% *s', 8, total_file_bite_size(files).to_s
+  printf '% *s', 8, total_file_line_count(files)
+  printf '% *s', 8, total_file_word_count(files)
+  printf '% *s', 8, total_file_bite_size(files)
   puts format '% s', ' total'
 end
