@@ -1,6 +1,6 @@
-# frozen_string_literal: true
-
 # !/usr/bin/env ruby
+
+# frozen_string_literal: true
 
 require 'optparse'
 
@@ -40,7 +40,7 @@ opt.parse(ARGV)
 if files.empty? # 標準入力から受け取る場合の処理
   std_input = readlines.join
   printf '% *s', 8, std_input.count("\n").to_s
-  if option.include?('l') == false
+  unless option.include?('l')
     printf '% *s', 8, std_input.scan(/\s+/).count.to_s
     printf '% *s', 8, std_input.size.to_s
   end
