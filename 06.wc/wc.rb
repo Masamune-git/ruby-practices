@@ -36,27 +36,28 @@ opt.on('-l') do
   files.shift
 end
 opt.parse(ARGV)
+output_width = 8 #生成文字列の長さ
 
 if files.empty? # 標準入力から受け取る場合の処理
   std_input = readlines.join
-  printf '% *s', 8, std_input.count("\n")
+  printf '% *s', output_width, std_input.count("\n")
   unless option.include?('l')
-    printf '% *s', 8, std_input.scan(/\s+/).count
-    printf '% *s', 8, std_input.size
+    printf '% *s', output_width, std_input.scan(/\s+/).count
+    printf '% *s', output_width, std_input.size
   end
   print "\n"
 end
 
 if option.include?('l') #-lオプションの処理
   files.each do |file|
-    printf '% *s', 8, file_line_count(file)
+    printf '% *s', output_width, file_line_count(file)
     puts format '% s', " #{file}"
   end
 else
   files.each do |file|
-    printf '% *s', 8, file_line_count(file)
-    printf '% *s', 8, file_word_count(file)
-    printf '% *s', 8, file_bite_size(file)
+    printf '% *s', output_width, file_line_count(file)
+    printf '% *s', output_width, file_word_count(file)
+    printf '% *s', output_width, file_bite_size(file)
     puts format '% s', " #{file}"
   end
 end
@@ -64,12 +65,12 @@ end
 # 複数ファイルを読み取った場合の処理
 if files.size >= 2
   if option.include?('l') #-lオプションの処理
-    printf '% *s', 8, total_file_line_count(files)
+    printf '% *s', output_width, total_file_line_count(files)
     puts format '% s', ' total'
   else
-    printf '% *s', 8, total_file_line_count(files)
-    printf '% *s', 8, total_file_word_count(files)
-    printf '% *s', 8, total_file_bite_size(files)
+    printf '% *s', output_width, total_file_line_count(files)
+    printf '% *s', output_width, total_file_word_count(files)
+    printf '% *s', output_width, total_file_bite_size(files)
     puts format '% s', ' total'
   end
 end
