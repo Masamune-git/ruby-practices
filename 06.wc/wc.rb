@@ -62,12 +62,14 @@ else
 end
 
 # 複数ファイルを読み取った場合の処理
-if files.size >= 2 && option.include?('l') #-lオプションの処理
-  printf '% *s', 8, total_file_line_count(files)
-  puts format '% s', ' total'
-elsif files.size >= 2 && option.include?('l') == false
-  printf '% *s', 8, total_file_line_count(files)
-  printf '% *s', 8, total_file_word_count(files)
-  printf '% *s', 8, total_file_bite_size(files)
-  puts format '% s', ' total'
+if files.size >= 2
+  if option.include?('l') #-lオプションの処理
+    printf '% *s', 8, total_file_line_count(files)
+    puts format '% s', ' total'
+  else
+    printf '% *s', 8, total_file_line_count(files)
+    printf '% *s', 8, total_file_word_count(files)
+    printf '% *s', 8, total_file_bite_size(files)
+    puts format '% s', ' total'
+  end
 end
