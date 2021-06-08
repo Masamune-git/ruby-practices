@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 require 'optparse'
 require 'date'
 options = ARGV.getopts('m:y:')
@@ -32,7 +34,7 @@ year = options['y'].to_i
 default_month = Date.today.month
 default_year = Date.today.year
 
-if (1..12).include?(month) && (1970..2100).include?(year)
+if (1..12).cover?(month) && (1970..2100).cover?(year)
   main(month, year)
 else
   main(default_month, default_year)

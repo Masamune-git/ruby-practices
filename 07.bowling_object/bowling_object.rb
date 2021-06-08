@@ -18,17 +18,15 @@ class Game
       end
     end
 
-    scores_array_slice = scores_array.each_slice(2).to_a
+    scores_array_slice = scores_array.each_slice(2)
     scores_array_slice.each do |frame|
-      @frames << Frame.new(frame[0],frame[1],frame[2])
+      @frames << Frame.new(frame[0], frame[1], frame[2])
     end
-    
   end
-  
+
   def score
-    
-    frames_score = frames.map{|frame| frame.score}
-    
+    frames_score = frames.map(&:scores_array)
+
     point = 0
     9.times do |frame_num|
       point +=
@@ -52,16 +50,14 @@ class Frame
   attr_reader :first_shot, :second_shot, :third_shot
 
   def initialize(first_mark, second_mark, third_mark)
-    if third_mark.nil?
-      third_mark = 0
-    end
+    third_mark = 0 if third_mark.nil?
 
     @first_shot = Shot.new(first_mark)
     @second_shot = Shot.new(second_mark)
     @third_shot = Shot.new(third_mark)
   end
 
-  def score
+  def scores_array
     [first_shot.score,
      second_shot.score,
      third_shot.score]
@@ -82,7 +78,6 @@ class Shot
   end
 end
 
-
 game = Game.new(scores)
 
-p game.score
+puts game.score
