@@ -9,6 +9,7 @@ class Game
   def initialize(scores)
     @frames = []
     scores_array = []
+
     scores.each do |score|
       if score == 'X' # strikeの処理
         scores_array << 'X'
@@ -19,15 +20,15 @@ class Game
     end
 
     scores_array_slice = scores_array.each_slice(2)
-    scores_array_slice.each do |frame|
-      @frames << Frame.new(frame[0], frame[1], frame[2])
+    scores_array_slice.each do |score|
+      @frames << Frame.new(score[0], score[1], score[2])
     end
   end
 
   def score
     frames_score = frames.map(&:scores_array)
-
     point = 0
+
     9.times do |frame_num|
       point +=
         if frames_score[frame_num][0] == 10 # strike
@@ -73,7 +74,6 @@ class Shot
 
   def score
     return 10 if mark == 'X'
-
     mark.to_i
   end
 end
