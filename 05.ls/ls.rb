@@ -33,11 +33,7 @@ def list_segments_output_longformat(file_entries)
   file_entries.each do |x|
     fs = File.lstat("./#{x}")
     blocks << fs.blocks
-    permissions << convert_to_filetype[fs.mode.to_s(8)[-5,
-                                                       2]] + convert_to_permission[fs.mode.to_s(8)[-3,
-                                                                                                   1]] + convert_to_permission[fs.mode.to_s(8)[-2,
-                                                                                                                                               1]] + convert_to_permission[fs.mode.to_s(8)[
--1, 1]]
+    permissions << convert_to_filetype[fs.mode.to_s(8)[-5, 2]] + convert_to_permission[fs.mode.to_s(8)[-3, 1]] + convert_to_permission[fs.mode.to_s(8)[-2, 1]] + convert_to_permission[fs.mode.to_s(8)[-1, 1]]
     links << fs.nlink.to_s
     users << Etc.getpwuid(fs.uid).name.to_s
     groups << Etc.getgrgid(fs.gid).name.to_s
