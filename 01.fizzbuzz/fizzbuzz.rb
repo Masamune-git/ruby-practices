@@ -3,11 +3,11 @@ i = 0
 100.times do
   i += 1
   if (i % 3).zero? && (i % 5).zero?
-    puts "FizzBuzz"
+    puts 'FizzBuzz'
   elsif (i % 3).zero?
-    puts "Fizz"
+    puts 'Fizz'
   elsif (i % 5).zero?
-    puts "Buzz"
+    puts 'Buzz'
   else
     puts i
   end
