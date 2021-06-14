@@ -18,7 +18,7 @@ class Game
 
     scores_array_slice = scores_array.each_slice(2)
     scores_array_slice.each do |score|
-      @frames << Frame.new(score[0], score[1], score[2])
+      @frames << Frame.new(score[0], score[1])
     end
   end
 
