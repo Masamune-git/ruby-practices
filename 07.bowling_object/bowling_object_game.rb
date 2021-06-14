@@ -21,23 +21,26 @@ class Game
   end
 
   def score
-    frames_score = @frames.map(&:scores_array)
+    # frames_score = @frames.map(&:scores_array)
     point = 0
-
+    @frames[0].first_shot.score
+    @frames[0].score
     9.times do |frame_num|
       point +=
-        if frames_score[frame_num][0] == 10 # strike
-          if frames_score[frame_num + 1][0] == 10 && frame_num != 8 # 2F連続でstrikeだった場合
-            10 + 10 + frames_score[frame_num + 2][0]
+        if @frames[frame_num].first_shot.score == 10 # strike
+          if @frames[frame_num + 1].first_shot.score == 10 && frame_num != 8 # 2F連続でstrikeだった場合
+            10 + 10 + @frames[frame_num + 2].first_shot.score
           else
-            10 + frames_score[frame_num + 1].sum
+            10 + @frames[frame_num + 1].score
           end
-        elsif frames_score[frame_num].sum == 10 # spare
-          10 + frames_score[frame_num + 1][0]
+        elsif @frames[frame_num].score == 10 # spare
+          10 + @frames[frame_num + 1].first_shot.score
         else
-          frames_score[frame_num].sum
+          @frames[frame_num].score
         end
     end
-    point += frames_score[9..10].flatten.sum
+    point += @frames[9].score
+    point += @frames[10].score if @frames.size == 11
+    point
   end
 end
