@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-NINTH_FRAME_ENDED = 18
-scores = ARGV[0].split(',')
-
 class Game
   attr_reader :frames
 
@@ -46,39 +43,3 @@ class Game
     point += frames_score[9..10].flatten.sum
   end
 end
-
-class Frame
-  attr_reader :first_shot, :second_shot, :third_shot
-
-  def initialize(first_mark, second_mark, third_mark)
-    third_mark = 0 if third_mark.nil?
-
-    @first_shot = Shot.new(first_mark)
-    @second_shot = Shot.new(second_mark)
-    @third_shot = Shot.new(third_mark)
-  end
-
-  def scores_array
-    [first_shot.score,
-     second_shot.score,
-     third_shot.score]
-  end
-end
-
-class Shot
-  attr_reader :mark
-
-  def initialize(mark)
-    @mark = mark
-  end
-
-  def score
-    return 10 if mark == 'X'
-
-    mark.to_i
-  end
-end
-
-game = Game.new(scores)
-
-puts game.score
