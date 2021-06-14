@@ -21,7 +21,6 @@ class Game
   end
 
   def score
-    # frames_score = @frames.map(&:scores_array)
     point = 0
     @frames[0].first_shot.score
     @frames[0].score
