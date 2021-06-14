@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Game
-  attr_reader :frames
-
   def initialize(scores)
     @frames = []
     scores_array = []
@@ -23,7 +21,7 @@ class Game
   end
 
   def score
-    frames_score = frames.map(&:scores_array)
+    frames_score = @frames.map(&:scores_array)
     point = 0
 
     9.times do |frame_num|
