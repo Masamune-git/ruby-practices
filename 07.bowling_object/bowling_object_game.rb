@@ -22,8 +22,6 @@ class Game
 
   def score
     point = 0
-    @frames[0].first_shot.score
-    @frames[0].score
     9.times do |frame_num|
       point +=
         if @frames[frame_num].first_shot.score == 10 # strike
