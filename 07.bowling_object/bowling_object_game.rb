@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+NINTH_FRAME_ENDED = 18
+
 class Game
   def initialize(scores)
     @frames = []
