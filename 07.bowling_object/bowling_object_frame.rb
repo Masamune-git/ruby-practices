@@ -11,4 +11,16 @@ class Frame
   def score
     @first_shot.score + @second_shot.score
   end
+
+  def strike?
+    return true if @first_shot.score == 10
+
+    false
+  end
+
+  def spare?
+    return true if @first_shot.score + @second_shot.score == 10
+
+    false
+  end
 end
