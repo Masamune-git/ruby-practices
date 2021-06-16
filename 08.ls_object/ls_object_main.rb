@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative 'ls_object_list'
 require 'optparse'
 
 module Ls
@@ -11,7 +12,7 @@ module Ls
       opt.on('-r') { option << 'r' }
       opt.on('-l') { option << 'l' }
       opt.parse(ARGV)
-      p option
+      List.new(file_entries,option)
     end
   end
 end
