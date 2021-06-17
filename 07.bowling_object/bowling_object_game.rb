@@ -25,13 +25,13 @@ class Game
     point = 0
     9.times do |frame_num|
       point +=
-        if @frames[frame_num].strike? # strike
-          if @frames[frame_num + 1].first_shot.score == 10 && frame_num != 8 # 2F連続でstrikeだった場合
+        if @frames[frame_num].strike?
+          if @frames[frame_num + 1].strike? && frame_num != 8 # 2F連続でstrikeだった場合
             10 + 10 + @frames[frame_num + 2].first_shot.score
           else
             10 + @frames[frame_num + 1].score
           end
-        elsif @frames[frame_num].spare? # spare
+        elsif @frames[frame_num].spare?
           10 + @frames[frame_num + 1].first_shot.score
         else
           @frames[frame_num].score
