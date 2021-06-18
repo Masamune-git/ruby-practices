@@ -1,10 +1,10 @@
 # frozen_string_literal: true
+
 require_relative 'ls_object_list'
 require_relative 'ls_object_longformat'
 require 'optparse'
 require 'etc'
 require 'fileutils'
-require 'optparse'
 require 'date'
 
 module Ls
@@ -17,7 +17,7 @@ module Ls
       opt.on('-r') { option << 'r' }
       opt.on('-l') { option << 'l' }
       opt.parse(ARGV)
-      List.new(file_entries,option)
+      List.new(file_entries, option)
     end
   end
 end
