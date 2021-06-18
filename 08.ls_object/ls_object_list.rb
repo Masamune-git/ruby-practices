@@ -2,6 +2,7 @@
 
 module Ls
   class List
+    Column_val = 3
     def initialize(file_entries, option)
       file_entries = Dir.glob('*', File::FNM_DOTMATCH).sort if option.include?('a')
       file_entries = file_entries.reverse if option.include?('r')
@@ -18,8 +19,8 @@ module Ls
     end
 
     def file_entries_transpse(file_entries)
-      file_entries << '' while file_entries.size % 3 != 0
-      file_entries.each_slice(file_entries.size / 3).to_a.transpose
+      file_entries << '' while file_entries.size % Column_val != 0
+      file_entries.each_slice(file_entries.size / Column_val).to_a.transpose
     end
 
     def list_segments_output(file_entries)
