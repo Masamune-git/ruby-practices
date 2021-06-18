@@ -17,11 +17,14 @@ module Ls
       file_entries.max_by(&:length).size + 2
     end
 
-    def list_segments_output(file_entries)
+    def file_entries_transpse(file_entries)
       file_entries << '' while file_entries.size % 3 != 0
-      file_entries_transpse = file_entries.each_slice(file_entries.size / 3).to_a.transpose
-      file_entries_transpse.size.times do |x|
-        file_entries_transpse[x].each  do |file|
+      file_entries.each_slice(file_entries.size / 3).to_a.transpose
+    end
+
+    def list_segments_output(file_entries)
+      file_entries_transpse(file_entries).size.times do |array_num|
+        file_entries_transpse(file_entries)[array_num].each  do |file|
           printf '% -*s', max_filename_length(file_entries), file.to_s
         end
         print "\n"
