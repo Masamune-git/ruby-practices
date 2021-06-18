@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 require_relative 'ls_object_list'
+require_relative 'ls_object_longformat'
 require 'optparse'
+require 'etc'
+require 'fileutils'
+require 'optparse'
+require 'date'
 
 module Ls
   class Main
