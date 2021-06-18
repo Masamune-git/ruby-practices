@@ -68,7 +68,6 @@ module Ls
     end
 
     def output
-      # puts "total #{@longformats['blocks'].map.sum}"
       puts "total #{blocks_sum}"
       @file_entries.each do |file|
         file_status = lstat(file)
