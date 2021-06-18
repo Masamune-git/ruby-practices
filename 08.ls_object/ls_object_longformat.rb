@@ -4,28 +4,8 @@ module Ls
   class Longformat
     def initialize(file_entries)
       @file_entries = file_entries
-      blocks, permissions, links, users, groups, file_sizes, times, paths = Array.new(8).map { [] }
-      convert_to_permission = { '0' => '---', '1' => '--x', '2' => '-w-', '3' => '-wx', '4' => 'r--', '5' => 'r-x', '6' => 'rw-', '7' => 'rwx' }
-      convert_to_filetype = { '00' => '-', '40' => 'd', '20' => 'l' }
-      file_entries.each do |file|
-        file_status = lstat(file)
-        blocks << blocks(file_status)
-        permissions << permissions(file_status, convert_to_filetype, convert_to_permission)
-        links << links(file_status)
-        users << users(file_status)
-        groups << groups(file_status)
-        file_sizes << file_sizes(file_status)
-        times << times(file_status)
-        paths << paths(file)
-      end
-      @longformats = { 'blocks' => blocks,
-                       'permissions' => permissions,
-                       'links' => links,
-                       'users' => users,
-                       'groups' => groups,
-                       'file_sizes' => file_sizes,
-                       'times' => times,
-                       'paths' => paths }
+      @convert_to_permission = { '0' => '---', '1' => '--x', '2' => '-w-', '3' => '-wx', '4' => 'r--', '5' => 'r-x', '6' => 'rw-', '7' => 'rwx' }
+      @convert_to_filetype = { '00' => '-', '40' => 'd', '20' => 'l' }
     end
 
     def lstat(file)
@@ -40,11 +20,11 @@ module Ls
       file_status.blocks
     end
 
-    def permissions(file_status, convert_to_filetype, convert_to_permission)
-      convert_to_filetype[file_status.mode.to_s(8)[-5, 2]] +
-        convert_to_permission[file_status.mode.to_s(8)[-3, 1]] +
-        convert_to_permission[file_status.mode.to_s(8)[-2, 1]] +
-        convert_to_permission[file_status.mode.to_s(8)[-1, 1]]
+    def permissions(file_status)
+      @convert_to_filetype[file_status.mode.to_s(8)[-5, 2]] +
+        @convert_to_permission[file_status.mode.to_s(8)[-3, 1]] +
+        @convert_to_permission[file_status.mode.to_s(8)[-2, 1]] +
+        @convert_to_permission[file_status.mode.to_s(8)[-1, 1]]
     end
 
     def links(file_status)
@@ -64,24 +44,41 @@ module Ls
     end
 
     def times(file_status)
-      "#{file_status.mtime.strftime('%m').to_i} #{file_status.mtime.strftime('%d')} #{file_status.mtime.strftime('%H:%M')}"
+      "#{file_status.mtime.strftime('%m').to_i} #{file_status.mtime.strftime('%e')} #{file_status.mtime.strftime('%H:%M')}"
     end
 
     def paths(file_status)
       file_status
     end
 
+    def links_max_length
+      @file_entries.map { |file| links(lstat(file)) }.max_by(&:length).size + 1
+    end
+
+    def users_max_length
+      @file_entries.map { |file| users(lstat(file)) }.max_by(&:length).size + 1
+    end
+
+    def groups_max_length
+      @file_entries.map { |file| groups(lstat(file)) }.max_by(&:length).size + 2
+    end
+
+    def file_sizes_max_length
+      @file_entries.map { |file| file_sizes(lstat(file)) }.max_by(&:length).size + 2
+    end
+
     def output
       # puts "total #{@longformats['blocks'].map.sum}"
       puts "total #{blocks_sum}"
-      @longformats['permissions'].size.times do |i|
-        printf '% -*s', 11, (@longformats['permissions'][i]).to_s
-        printf '% *s', @longformats['links'].max_by(&:length).size + 1, (@longformats['links'][i]).to_s
-        printf '% -*s', @longformats['users'].max_by(&:length).size + 1, " #{@longformats['users'][i]}"
-        printf '% -*s', @longformats['groups'].max_by(&:length).size + 2, "  #{@longformats['groups'][i]}"
-        printf '% *s', @longformats['file_sizes'].max_by(&:length).size + 2, "  #{@longformats['file_sizes'][i]}"
-        printf '%*s', 13, "#{@longformats['times'][i]} "
-        puts format (@longformats['paths'][i]).to_s
+      @file_entries.each do |file|
+        file_status = lstat(file)
+        printf '% -*s', 11, permissions(file_status).to_s
+        printf '% *s', links_max_length, links(file_status).to_s
+        printf '% -*s', users_max_length, " #{users(file_status)}"
+        printf '% -*s', groups_max_length, "  #{groups(file_status)}"
+        printf '% *s', file_sizes_max_length, "  #{file_sizes(file_status)}"
+        printf '% *s', 13, "#{times(file_status)} "
+        puts format paths(file).to_s
       end
     end
   end
