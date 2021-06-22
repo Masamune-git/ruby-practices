@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Ls
-  class List
+  class Generate
     COLUMNVAL = 3
     def initialize(file_entries, option)
       file_entries = Dir.glob('*', File::FNM_DOTMATCH).sort if option.include?('a')
