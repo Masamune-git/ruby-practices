@@ -18,6 +18,7 @@ module Ls
       '40' => 'd',
       '20' => 'l'
     }.freeze
+
     def initialize(file)
       @file = file
       @file_status = File.lstat("./#{file}")
