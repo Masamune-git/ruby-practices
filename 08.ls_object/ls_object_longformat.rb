@@ -21,10 +21,11 @@ module Ls
     end
 
     def permissions(file_status)
-      @convert_to_filetype[file_status.mode.to_s(8)[-5, 2]] +
-        @convert_to_permission[file_status.mode.to_s(8)[-3, 1]] +
-        @convert_to_permission[file_status.mode.to_s(8)[-2, 1]] +
-        @convert_to_permission[file_status.mode.to_s(8)[-1, 1]]
+      permission_num = file_status.mode.to_s(8)
+      @convert_to_filetype[permission_num[-5, 2]] +
+        @convert_to_permission[permission_num[-3, 1]] +
+        @convert_to_permission[permission_num[-2, 1]] +
+        @convert_to_permission[permission_num[-1, 1]]
     end
 
     def links(file_status)
