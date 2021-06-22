@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Ls
-  class Format
+  class FileData
     COLUMNVAL = 3
     def initialize(file_entries)
       @file_entries = file_entries

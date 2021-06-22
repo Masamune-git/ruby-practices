@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Ls
-  class Output < Format
+  class Output < FileData
     def default
       file_entries_transpose.size.times do |array_num|
         file_entries_transpose[array_num].each do |file|
