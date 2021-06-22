@@ -6,12 +6,9 @@ module Ls
     def initialize(file_entries, option)
       file_entries = Dir.glob('*', File::FNM_DOTMATCH).sort if option.include?('a')
       file_entries = file_entries.reverse if option.include?('r')
+      return list_segments_output_longformat(file_entries) if option.include?('l')        
 
-      if option.include?('l')
-        list_segments_output_longformat(file_entries)
-      else
-        list_segments_output(file_entries)
-      end
+      list_segments_output(file_entries)
     end
 
     def max_filename_length(file_entries)
