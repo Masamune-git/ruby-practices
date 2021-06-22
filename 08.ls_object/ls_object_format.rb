@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 module Ls
-  class Longformat
+  class Format
+    COLUMNVAL = 3
     def initialize(file_entries)
       @file_entries = file_entries
       @convert_to_permission = { '0' => '---', '1' => '--x', '2' => '-w-', '3' => '-wx', '4' => 'r--', '5' => 'r-x', '6' => 'rw-', '7' => 'rwx' }
@@ -68,18 +69,13 @@ module Ls
       @file_entries.map { |file| file_sizes(lstat(file)) }.max_by(&:length).size + 2
     end
 
-    def output
-      puts "total #{blocks_sum}"
-      @file_entries.each do |file|
-        file_status = lstat(file)
-        printf '% -*s', 11, permissions(file_status).to_s
-        printf '% *s', links_max_length, links(file_status).to_s
-        printf '% -*s', users_max_length, " #{users(file_status)}"
-        printf '% -*s', groups_max_length, "  #{groups(file_status)}"
-        printf '% *s', file_sizes_max_length, "  #{file_sizes(file_status)}"
-        printf '% *s', 13, "#{times(file_status)} "
-        puts format paths(file).to_s
-      end
+    def max_filename_length
+      @file_entries.max_by(&:length).size + 2
+    end
+
+    def file_entries_transpose
+      @file_entries << '' while @file_entries.size % COLUMNVAL != 0
+      @file_entries.each_slice(@file_entries.size / COLUMNVAL).to_a.transpose
     end
   end
 end
