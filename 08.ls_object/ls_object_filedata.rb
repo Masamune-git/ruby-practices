@@ -14,7 +14,7 @@ module Ls
       @file_status.blocks
     end
 
-    def permissions
+    def permission
       permission_num = @file_status.mode.to_s(8)
       @filetype_map[permission_num[-5, 2]] +
         @permission_map[permission_num[-3, 1]] +
@@ -22,27 +22,27 @@ module Ls
         @permission_map[permission_num[-1, 1]]
     end
 
-    def links
+    def link
       @file_status.nlink.to_s
     end
 
-    def users
+    def user
       Etc.getpwuid(@file_status.uid).name.to_s
     end
 
-    def groups
+    def group
       Etc.getgrgid(@file_status.gid).name.to_s
     end
 
-    def file_sizes
+    def file_size
       @file_status.size.to_s
     end
 
-    def times
+    def time
       "#{@file_status.mtime.strftime('%-m')} #{@file_status.mtime.strftime('%e')} #{@file_status.mtime.strftime('%H:%M')}"
     end
 
-    def paths
+    def path
       @file
     end
   end
