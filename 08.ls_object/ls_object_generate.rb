@@ -15,7 +15,6 @@ module Ls
 
     def option_output_format(file_entries, option)
       return Output.new(file_entries).longformat if option.include?('l')
-
       Output.new(file_entries).default
     end
   end
