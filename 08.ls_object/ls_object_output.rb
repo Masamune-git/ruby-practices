@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 module Ls
-  class Output < FileData
+  class Output < Format
     def default
       file_entries_transpose.size.times do |array_num|
         file_entries_transpose[array_num].each do |file|
-          printf '% -*s', max_filename_length, file.to_s
+          file_status = Filedata.new(file)
+          print default_path_format(file_status)
         end
         print "\n"
       end
@@ -14,14 +15,14 @@ module Ls
     def longformat
       puts "total #{blocks_sum}"
       @file_entries.each do |file|
-        file_status = lstat(file)
-        printf '% -*s', 11, permissions(file_status).to_s
-        printf '% *s', links_max_length, links(file_status).to_s
-        printf '% -*s', users_max_length, " #{users(file_status)}"
-        printf '% -*s', groups_max_length, "  #{groups(file_status)}"
-        printf '% *s', file_sizes_max_length, "  #{file_sizes(file_status)}"
-        printf '% *s', 13, "#{times(file_status)} "
-        puts format paths(file).to_s
+        file_status = Filedata.new(file)
+        print permissions_format(file_status)
+        print links_format(file_status)
+        print users_format(file_status)
+        print groups_format(file_status)
+        print file_sizes_format(file_status)
+        print times_format(file_status)
+        puts format file_status.paths.to_s
       end
     end
   end

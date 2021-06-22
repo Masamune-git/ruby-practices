@@ -3,15 +3,17 @@
 module Ls
   class Main
     attr_reader :file_entries, :option
+
     def initialize
-      require_relative 'ls_object_generate.rb'
+      require_relative 'ls_object_generate'
       require_relative 'ls_object_format'
+      require_relative 'ls_object_filedata'
       require_relative 'ls_object_output'
       require 'optparse'
       require 'etc'
       require 'fileutils'
       require 'date'
-      
+
       opt = OptionParser.new
       @file_entries = Dir.glob('*').sort
       @option = []
@@ -21,8 +23,8 @@ module Ls
       opt.parse(ARGV)
     end
 
-    def generate      
-      Generate.new(file_entries,option)
+    def generate
+      Generate.new(file_entries, option)
     end
   end
 end
