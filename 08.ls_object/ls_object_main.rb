@@ -4,7 +4,7 @@ module Ls
   class Main
     attr_reader :file_entries, :option
     def initialize
-      require_relative 'ls_object_list'
+      require_relative 'ls_object_generate.rb'
       require_relative 'ls_object_format'
       require_relative 'ls_object_output'
       require 'optparse'
