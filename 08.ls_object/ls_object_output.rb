@@ -22,7 +22,8 @@ module Ls
         print groups_format(file_status)
         print file_sizes_format(file_status)
         print times_format(file_status)
-        puts file_path_format(file_status)
+        print file_path_format(file_status)
+        print "\n"
       end
     end
   end
