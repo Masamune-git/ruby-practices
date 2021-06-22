@@ -5,8 +5,8 @@ module Ls
     COLUMNVAL = 3
     def initialize(file_entries)
       @file_entries = file_entries
-      @convert_to_permission = { '0' => '---', '1' => '--x', '2' => '-w-', '3' => '-wx', '4' => 'r--', '5' => 'r-x', '6' => 'rw-', '7' => 'rwx' }
-      @convert_to_filetype = { '00' => '-', '40' => 'd', '20' => 'l' }
+      @permission_map = { '0' => '---', '1' => '--x', '2' => '-w-', '3' => '-wx', '4' => 'r--', '5' => 'r-x', '6' => 'rw-', '7' => 'rwx' }
+      @filetype_map = { '00' => '-', '40' => 'd', '20' => 'l' }
     end
 
     def lstat(file)
@@ -23,10 +23,10 @@ module Ls
 
     def permissions(file_status)
       permission_num = file_status.mode.to_s(8)
-      @convert_to_filetype[permission_num[-5, 2]] +
-        @convert_to_permission[permission_num[-3, 1]] +
-        @convert_to_permission[permission_num[-2, 1]] +
-        @convert_to_permission[permission_num[-1, 1]]
+      @filetype_map[permission_num[-5, 2]] +
+        @permission_map[permission_num[-3, 1]] +
+        @permission_map[permission_num[-2, 1]] +
+        @permission_map[permission_num[-1, 1]]
     end
 
     def links(file_status)
