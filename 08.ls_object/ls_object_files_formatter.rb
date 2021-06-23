@@ -45,27 +45,27 @@ module Ls
       file_status.path.to_s.ljust(max_filename_length)
     end
 
-    def permissions_format(file_status)
+    def permission_format(file_status)
       file_status.permission.to_s.ljust(11)
     end
 
-    def links_format(file_status)
+    def link_format(file_status)
       file_status.link.to_s.rjust(links_max_length)
     end
 
-    def users_format(file_status)
+    def user_format(file_status)
       " #{file_status.user.ljust(users_max_length)}"
     end
 
-    def groups_format(file_status)
+    def group_format(file_status)
       "  #{file_status.group.ljust(groups_max_length)}"
     end
 
-    def file_sizes_format(file_status)
+    def file_size_format(file_status)
       file_status.file_size.rjust(file_sizes_max_length).to_s
     end
 
-    def times_format(file_status)
+    def time_format(file_status)
       "  #{file_status.time.rjust(file_times_max_length)} "
     end
 
@@ -84,12 +84,12 @@ module Ls
       output_formats = []
       output_formats << "total #{blocks_sum}\n"
       output_formats << @file_entries.map do |file|
-        "#{permissions_format(file)}"\
-       "#{links_format(file)}"\
-       "#{users_format(file)}"\
-       "#{groups_format(file)}"\
-       "#{file_sizes_format(file)}"\
-       "#{times_format(file)}"\
+        "#{permission_format(file)}"\
+       "#{link_format(file)}"\
+       "#{user_format(file)}"\
+       "#{group_format(file)}"\
+       "#{file_size_format(file)}"\
+       "#{time_format(file)}"\
        "#{file_path_format(file)}"\
        "\n"
       end
