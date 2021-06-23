@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
-require_relative 'ls_object_files_formater'
-require_relative 'ls_object_file_formater'
+require_relative 'ls_object_files_formatter'
+require_relative 'ls_object_file_formatter'
 require_relative 'ls_object_output'
+require_relative 'ls_object_generate'
 require 'optparse'
 require 'etc'
 require 'fileutils'
 require 'date'
 
 module Ls
-  class Main
-    attr_reader :file_entries, :option
+  class Input
+    # attr_reader :file_entries, :option
 
     def initialize
       opt = OptionParser.new
@@ -23,22 +24,9 @@ module Ls
     end
 
     def generate
-      option_file_entries = option_file_entries(file_entries, option)
-      option_output_format(option_file_entries, option)
-    end
-
-    def option_file_entries(file_entries, option)
-      file_entries = Dir.glob('*', File::FNM_DOTMATCH).sort if option.include?('a')
-      file_entries = file_entries.reverse if option.include?('r')
-      file_entries
-    end
-
-    def option_output_format(file_entries, option)
-      return FilesFormatter.new(file_entries).longformat if option.include?('l')
-
-      FilesFormatter.new(file_entries).default
+      Generate.new(@file_entries, @option).generate
     end
   end
 end
 
-Ls::Main.new.generate
+Ls::Input.new.generate
