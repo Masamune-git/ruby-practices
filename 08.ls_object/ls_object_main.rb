@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'ls_object_format'
-require_relative 'ls_object_filedata'
+require_relative 'ls_object_files_formater'
+require_relative 'ls_object_file_formater'
 require_relative 'ls_object_output'
 require 'optparse'
 require 'etc'
@@ -34,9 +34,9 @@ module Ls
     end
 
     def option_output_format(file_entries, option)
-      return Output.new(file_entries).longformat if option.include?('l')
+      return FilesFormatter.new(file_entries).longformat if option.include?('l')
 
-      Output.new(file_entries).default
+      FilesFormatter.new(file_entries).default
     end
   end
 end

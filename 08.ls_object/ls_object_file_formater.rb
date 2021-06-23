@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Ls
-  class Filedata
+  class FileFormatter
     PERMISSION_MAP = {
       '0' => '---',
       '1' => '--x',
