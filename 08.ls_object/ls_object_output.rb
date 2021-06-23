@@ -5,8 +5,7 @@ module Ls
     def default
       file_entries_transpose.size.times do |array_num|
         file_entries_transpose[array_num].each do |file|
-          file_status = Filedata.new(file)
-          print file_path_format(file_status)
+          print file_path_format(file)
         end
         print "\n"
       end
@@ -15,14 +14,13 @@ module Ls
     def longformat
       puts "total #{blocks_sum}"
       @file_entries.each do |file|
-        file_status = Filedata.new(file)
-        print permissions_format(file_status)
-        print links_format(file_status)
-        print users_format(file_status)
-        print groups_format(file_status)
-        print file_sizes_format(file_status)
-        print times_format(file_status)
-        print file_path_format(file_status)
+        print permissions_format(file)
+        print links_format(file)
+        print users_format(file)
+        print groups_format(file)
+        print file_sizes_format(file)
+        print times_format(file)
+        print file_path_format(file)
         print "\n"
       end
     end

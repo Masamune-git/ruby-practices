@@ -5,43 +5,39 @@ module Ls
     COLUMNVAL = 3
 
     def initialize(file_entries)
-      @file_entries = file_entries
-    end
-
-    def lstat(file)
-      Filedata.new(file)
+      @file_entries = file_entries.map { |file| Filedata.new(file) }
     end
 
     def blocks_sum
-      @file_entries.map { |file| Filedata.new(file).blocks }.sum
+      @file_entries.map { |file| file.blocks }.sum
     end
 
     def links_max_length
-      @file_entries.map { |file| Filedata.new(file).link }.max_by(&:length).size + 1
+      @file_entries.map { |file| file.link }.max_by(&:length).size + 1
     end
 
     def users_max_length
-      @file_entries.map { |file| Filedata.new(file).user }.max_by(&:length).size
+      @file_entries.map { |file| file.user }.max_by(&:length).size
     end
 
     def groups_max_length
-      @file_entries.map { |file| Filedata.new(file).group }.max_by(&:length).size
+      @file_entries.map { |file| file.group }.max_by(&:length).size
     end
 
     def file_sizes_max_length
-      @file_entries.map { |file| Filedata.new(file).file_size }.max_by(&:length).size + 2
+      @file_entries.map { |file| file.file_size }.max_by(&:length).size + 2
     end
 
     def max_filename_length
-      @file_entries.max_by(&:length).size + 1
+      @file_entries.map { |file| file.path }.max_by(&:length).size + 1
     end
 
     def file_times_max_length
-      @file_entries.map { |file| Filedata.new(file).time }.max_by(&:length).size
+      @file_entries.map { |file| file.time }.max_by(&:length).size
     end
 
     def file_entries_transpose
-      @file_entries << '' while @file_entries.size % COLUMNVAL != 0
+      @file_entries << Filedata.new('') while @file_entries.size % COLUMNVAL != 0
       @file_entries.each_slice(@file_entries.size / COLUMNVAL).to_a.transpose
     end
 
