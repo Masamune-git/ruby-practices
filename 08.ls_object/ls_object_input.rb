@@ -11,8 +11,6 @@ require 'date'
 
 module Ls
   class Input
-    # attr_reader :file_entries, :option
-
     def initialize
       opt = OptionParser.new
       @file_entries = Dir.glob('*').sort
