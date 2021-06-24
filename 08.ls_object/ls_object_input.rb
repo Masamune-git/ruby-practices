@@ -3,7 +3,7 @@
 require_relative 'ls_object_files_formatter'
 require_relative 'ls_object_file_formatter'
 require_relative 'ls_object_output'
-require_relative 'ls_object_generate'
+require_relative 'ls_object_generator'
 require 'optparse'
 require 'etc'
 require 'fileutils'
@@ -22,7 +22,7 @@ module Ls
     end
 
     def generate
-      Generate.new(@file_entries, @option).generate
+      Generator.new(@file_entries, @option).generate
     end
   end
 end

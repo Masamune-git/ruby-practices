@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Ls
-  class Generate
+  class Generator
     attr_reader :file_entries, :option
 
     def initialize(file_entries, option)
