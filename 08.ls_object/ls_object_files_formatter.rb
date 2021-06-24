@@ -69,7 +69,7 @@ module Ls
       "  #{file_status.time.rjust(file_times_max_length)} "
     end
 
-    def default_format
+    def formatted_print
       output_formats = []
       file_entries_transpose.size.times do |array_num|
         file_entries_transpose[array_num].each do |file|

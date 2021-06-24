@@ -22,7 +22,7 @@ module Ls
     def option_output_format(file_entries, option)
       return FilesFormatter.new(file_entries).long_format if option[:l]
 
-      FilesFormatter.new(file_entries).default_format
+      FilesFormatter.new(file_entries).formatted_print
     end
   end
 end
