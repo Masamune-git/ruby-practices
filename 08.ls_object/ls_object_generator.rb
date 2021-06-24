@@ -2,7 +2,6 @@
 
 module Ls
   class Generator
-    attr_reader :file_entries, :option
 
     def initialize(file_entries, option)
       @file_entries = file_entries
@@ -10,8 +9,8 @@ module Ls
     end
 
     def generate
-      option_file_entries = option_file_entries(file_entries, option)
-      option_output_format(option_file_entries, option)
+      option_file_entries = option_file_entries(@file_entries, @option)
+      option_output_format(option_file_entries, @option)
     end
 
     def option_file_entries(file_entries, option)
