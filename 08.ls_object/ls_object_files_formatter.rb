@@ -77,7 +77,7 @@ module Ls
         end
         output_formats << "\n"
       end
-      Output.new(output_formats.join).output
+      output_formats.join
     end
 
     def longformat
@@ -93,7 +93,7 @@ module Ls
        "#{file_path_format(file)}"\
        "\n"
       end
-      Output.new(output_formats.join).output
+      output_formats.join
     end
   end
 end

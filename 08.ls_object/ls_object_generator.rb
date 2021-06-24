@@ -10,7 +10,8 @@ module Ls
 
     def generate
       option_file_entries = option_file_entries(@file_entries, @option)
-      option_output_format(option_file_entries, @option)
+      formatted_text = option_output_format(option_file_entries, @option)
+      Output.new(formatted_text).output
     end
 
     def option_file_entries(file_entries, option)
