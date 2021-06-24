@@ -2,7 +2,6 @@
 
 module Ls
   class Generator
-
     def initialize(file_entries, option)
       @file_entries = file_entries
       @option = option
