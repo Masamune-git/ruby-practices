@@ -14,13 +14,13 @@ module Ls
     end
 
     def option_file_entries(file_entries, option)
-      file_entries = Dir.glob('*', File::FNM_DOTMATCH).sort if option.include?('a')
-      file_entries = file_entries.reverse if option.include?('r')
+      file_entries = Dir.glob('*', File::FNM_DOTMATCH).sort if option[:a]
+      file_entries = file_entries.reverse if option[:r]
       file_entries
     end
 
     def option_output_format(file_entries, option)
-      return FilesFormatter.new(file_entries).longformat if option.include?('l')
+      return FilesFormatter.new(file_entries).longformat if option[:l]
 
       FilesFormatter.new(file_entries).default
     end

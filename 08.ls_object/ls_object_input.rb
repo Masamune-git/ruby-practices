@@ -14,10 +14,10 @@ module Ls
     def initialize
       opt = OptionParser.new
       @file_entries = Dir.glob('*').sort
-      @option = []
-      opt.on('-a') { @option << 'a' }
-      opt.on('-r') { @option << 'r' }
-      opt.on('-l') { @option << 'l' }
+      @option = {}
+      opt.on('-a') { |v| @option[:a] = v }
+      opt.on('-r') { |v| @option[:r] = v }
+      opt.on('-l') { |v| @option[:l] = v }
       opt.parse(ARGV)
     end
 
