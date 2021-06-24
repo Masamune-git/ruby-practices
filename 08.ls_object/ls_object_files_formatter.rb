@@ -69,7 +69,7 @@ module Ls
       "  #{file_status.time.rjust(file_times_max_length)} "
     end
 
-    def default
+    def default_format
       output_formats = []
       file_entries_transpose.size.times do |array_num|
         file_entries_transpose[array_num].each do |file|
@@ -80,7 +80,7 @@ module Ls
       output_formats.join
     end
 
-    def longformat
+    def long_format
       output_formats = []
       output_formats << "total #{blocks_sum}\n"
       output_formats << @file_entries.map do |file|

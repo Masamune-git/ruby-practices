@@ -21,9 +21,9 @@ module Ls
     end
 
     def option_output_format(file_entries, option)
-      return FilesFormatter.new(file_entries).longformat if option[:l]
+      return FilesFormatter.new(file_entries).long_format if option[:l]
 
-      FilesFormatter.new(file_entries).default
+      FilesFormatter.new(file_entries).default_format
     end
   end
 end
